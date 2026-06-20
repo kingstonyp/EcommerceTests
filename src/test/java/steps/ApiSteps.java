@@ -9,11 +9,8 @@ import org.junit.Assert;
 
 public class ApiSteps {
 
-    // Aquí guardaremos la dirección de la cocina y el plato que nos entreguen
+    // 1. Dejamos UNA SOLA caja en la "mesa principal"
     String endpoint;
-    Response respuesta;
-    // 2. ¡AQUÍ ESTÁ LA DECLARACIÓN!
-    // La ponemos en la "mesa principal" para que todos los @pasos puedan usarla.
     Response response;
 
     @Given("que tengo el endpoint de la API de productos")
@@ -39,17 +36,17 @@ public class ApiSteps {
 
     @Then("el cuerpo de la respuesta contiene el campo {string}")
     public void el_cuerpo_de_la_respuesta_contiene_el_campo(String campoEsperado) {
-        // CRITERIO 2: Validamos que el plato traiga los ingredientes correctos (que exista la palabra 'title')
-        String cuerpo = respuesta.getBody().asString();
+        // CRITERIO 2: Usamos la MISMA caja "response" que llenamos en el @When
+        String cuerpo = response.getBody().asString();
         Assert.assertTrue("¡Error! El cuerpo no contiene el campo esperado", cuerpo.contains(campoEsperado));
     }
 
     @Then("el tiempo de respuesta es menor a {int} milisegundos")
     public void el_tiempo_de_respuesta_es_menor_a_milisegundos(Integer tiempoMaximo) {
-        // CRITERIO 3: Validamos la latencia. La cocina debe ser rápida.
-        long tiempoReal = respuesta.getTime();
+        // CRITERIO 3: Validamos la latencia leyendo de la caja correcta
+        long tiempoReal = response.getTime();
         Assert.assertTrue("¡Muy lento! La API tardó: " + tiempoReal + "ms", tiempoReal < tiempoMaximo);
 
-        System.out.println("¡Éxito Nivel Avanzado! La API respondió en " + tiempoReal + "ms con Status " + respuesta.getStatusCode());
+        System.out.println("¡Éxito Nivel Avanzado! La API respondió en " + tiempoReal + "ms con Status " + response.getStatusCode());
     }
 }
