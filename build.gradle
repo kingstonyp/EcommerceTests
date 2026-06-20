@@ -25,9 +25,13 @@ dependencies {
 
 test {
     useJUnit()
-    include '**/*Runner.class'
-    // ¡La orden inquebrantable para crear el cajón!
+    // 1. Forzamos la ruta de Allure
     systemProperty 'allure.results.directory', 'build/allure-results'
+
+    // 2. Encendemos los micrófonos para ver los resultados en la consola de GitHub
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }
 
 // 3. Le indicamos a Gradle qué versión del motor de Allure utilizar

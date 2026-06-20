@@ -33,10 +33,10 @@ jobs:
       - name: Ejecutar pruebas automatizadas
         run: ./gradlew test
 
-      # 7. La Evidencia: Si algo falla o pasa, guardamos la carpeta de Allure
-      - name: Guardar resultados de pruebas (Allure)
+      # 7. La Evidencia: Empacamos TODA la carpeta build para no perder nada
+      - name: Guardar resultados de pruebas
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
-          path: build/allure-results # <-- Sin asteriscos, ruta directa y estricta
+          name: reporte-y-logs
+          path: build/ # <-- Le quitamos "allure-results" para que descargue todo el cajón
