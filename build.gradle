@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    // 1. Agregamos el plugin principal de Allure
+    id "io.qameta.allure" version "2.12.0"
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Las herramientas que ya teníamos en nuestra cocina
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.16.1'
+    testImplementation 'io.cucumber:cucumber-java:7.15.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.15.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'io.rest-assured:rest-assured:5.3.2'
+
+    // 2. El "escucha" específico que traduce Cucumber 7 a Allure
+    testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.24.0'
+}
+
+test {
+    useJUnit()
+}
+
+// 3. Le indicamos a Gradle qué versión del motor de Allure utilizar
+allure {
+    version = '2.24.0'
+}
