@@ -16,11 +16,11 @@ jobs:
     steps:
       # 3. La Receta: El servidor descarga nuestro código desde GitHub.
       - name: Descargar codigo del repositorio
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # <-- Cambiado a v4
 
-      # 4. El Horno: Instalamos la misma versión de Java que usamos localmente.
+      # 4. El Horno: Instalamos la versión de Java.
       - name: Configurar Java 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4 # <-- Cambiado a v4
         with:
           java-version: '11'
           distribution: 'temurin'
@@ -33,10 +33,10 @@ jobs:
       - name: Ejecutar pruebas automatizadas
         run: ./gradlew test
 
-      # 7. La Evidencia: Si algo falla o pasa, guardamos la carpeta de Allure para revisar los resultados después.
+      # 7. La Evidencia: Guardamos la carpeta de Allure
       - name: Guardar resultados de pruebas (Allure)
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # <-- ¡Esta es la línea clave del error, cambiada a v4!
         with:
           name: allure-results
           path: build/allure-results
