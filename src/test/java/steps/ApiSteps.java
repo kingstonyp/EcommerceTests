@@ -12,6 +12,9 @@ public class ApiSteps {
     // Aquí guardaremos la dirección de la cocina y el plato que nos entreguen
     String endpoint;
     Response respuesta;
+    // 2. ¡AQUÍ ESTÁ LA DECLARACIÓN!
+    // La ponemos en la "mesa principal" para que todos los @pasos puedan usarla.
+    Response response;
 
     @Given("que tengo el endpoint de la API de productos")
     public void que_tengo_el_endpoint_de_la_api_de_productos() {
@@ -19,17 +22,19 @@ public class ApiSteps {
         endpoint = "https://fakestoreapi.com/products/1";
     }
 
-    @When("envio una peticion GET para consultar el producto 1")
-    public void envio_una_peticion_get_para_consultar_el_producto_1() {
-        // RestAssured grita "¡GET!" (Tráeme información) y guardamos lo que nos devuelve en 'respuesta'
-        respuesta = RestAssured.get(endpoint);
+    @When("envio una peticion GET para consultar el producto {int}")
+    public void envio_una_peticion_get_para_consultar_el_producto(Integer id) {
+        // Le ponemos un disfraz (User-Agent) para que la API pública no bloquee al servidor de GitHub
+        response = RestAssured.given()
+                .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+                .get("https://fakestoreapi.com/products/" + id);
     }
 
     @Then("el codigo de estado debe ser {int}")
     public void el_codigo_de_estado_debe_ser(Integer codigoEsperado) {
         // CRITERIO 1: Validamos que el chef diga "200 OK" y no un error
-        int codigoReal = respuesta.getStatusCode();
-        Assert.assertEquals("¡Error! El código de estado no es correcto", (int) codigoEsperado, codigoReal);
+        int codigoReal = response.getStatusCode();
+        Assert.assertEquals("¡Error! El código de estado no es correcto", (long)codigoEsperado, (long)codigoReal);
     }
 
     @Then("el cuerpo de la respuesta contiene el campo {string}")
