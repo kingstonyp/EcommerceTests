@@ -18,11 +18,11 @@ jobs:
       - name: Descargar codigo del repositorio
         uses: actions/checkout@v4  # <-- Cambiado a v4
 
-      # 4. El Horno: Instalamos la versión de Java.
-      - name: Configurar Java 11
-        uses: actions/setup-java@v4 # <-- Cambiado a v4
+      # 4. El Horno: Instalamos una versión de Java más moderna.
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
 
       # 5. Permisos: Le damos autorización al asistente Gradle para que pueda ejecutar comandos.
