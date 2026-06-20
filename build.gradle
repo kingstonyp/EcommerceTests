@@ -25,6 +25,7 @@ dependencies {
 
 test {
     useJUnit()
+    include '**/*Runner.class' // ¡Esta línea le da gafas nuevas a Gradle!
 }
 
 // 3. Le indicamos a Gradle qué versión del motor de Allure utilizar
