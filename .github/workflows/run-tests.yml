@@ -39,4 +39,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: "**/allure-results"  # <-- ¡La magia! Esto buscará la carpeta en toda la cocina.
+          path: build/allure-results # <-- Sin asteriscos, ruta directa y estricta
